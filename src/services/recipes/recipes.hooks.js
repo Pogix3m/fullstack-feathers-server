@@ -1,11 +1,13 @@
 
 
+const recipes = require('../../hooks/recipes');
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [recipes()],
     update: [],
     patch: [],
     remove: []
