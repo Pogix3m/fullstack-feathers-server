@@ -2,7 +2,6 @@ const authentication = require('feathers-authentication');
 const jwt = require('feathers-authentication-jwt');
 const local = require('feathers-authentication-local');
 
-
 module.exports = function () {
   const app = this;
   const config = app.get('authentication');
@@ -22,7 +21,14 @@ module.exports = function () {
       ],
       remove: [
         authentication.hooks.authenticate('jwt')
-      ]
+      ]},
+    after: {
+      create: [hook => {
+        hook.result.data = {
+          email: hook.params.user.email,
+          _id: hook.params.user._id
+        };
+      }]
     }
   });
 };
